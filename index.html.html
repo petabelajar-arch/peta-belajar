@@ -1,0 +1,372 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PETA BELAJAR</title>
+<style>
+:root{--navy:#142746;--blue:#2864d7;--bg:#f3f6fb;--text:#25344d;--muted:#718096;--line:#e3e9f2;--white:#fff;--green:#16845b;--orange:#bd7510;--red:#c34250}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--text)}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+.layout{min-height:100vh}
+.sidebar{position:fixed;inset:0 auto 0 0;width:245px;background:var(--navy);color:white;padding:25px 15px;display:flex;flex-direction:column;z-index:5;overflow:auto}
+.brand{font-size:23px;font-weight:800;letter-spacing:1px;padding:4px 10px}
+.brand small{display:block;font-size:11px;font-weight:400;letter-spacing:2px;color:#b5c9e8;margin-top:7px}
+.navlabel{font-size:10px;color:#92a9ca;letter-spacing:1.5px;margin:28px 12px 10px}
+.nav{display:flex;gap:12px;align-items:center;padding:12px;border-radius:9px;color:#d3deef;text-decoration:none;margin:3px 0;font-size:14px;border:0;background:none;text-align:left;width:100%}
+.nav:hover,.nav.active{background:#294366;color:white}
+.sidefoot{margin-top:auto;color:#a8bad5;font-size:11px;padding:22px 10px 0;line-height:1.8}
+.main{margin-left:245px;min-width:0}
+.topbar{background:white;border-bottom:1px solid var(--line);padding:17px 30px;display:flex;align-items:center;justify-content:space-between;gap:15px}
+.topbar strong{font-size:15px}
+.topbar small{color:var(--muted);font-size:11px;overflow-wrap:anywhere}
+.content{padding:28px;max-width:1500px;margin:auto}
+h1{font-size:26px;margin:0 0 8px;color:var(--navy)}
+h2{font-size:17px;margin:0 0 15px}
+.sub{color:var(--muted);font-size:13px;line-height:1.7;margin:0 0 23px}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-bottom:22px}
+.card{background:white;border:1px solid var(--line);border-radius:13px;padding:20px;min-width:0}
+.stat-label{font-size:12px;color:var(--muted)}
+.stat{font-size:29px;font-weight:750;color:var(--navy);margin:10px 0 5px}
+.stat-note{font-size:11px;color:var(--muted)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.btn{border:0;border-radius:8px;padding:10px 15px;font-size:12px;font-weight:650;background:var(--blue);color:white}
+.btn:hover{filter:brightness(.95)}
+.btn.secondary{background:#eaf0fa;color:#264875}
+.btn.danger{background:#fff0f0;color:#b52c3b}
+.btn.success{background:#e6f7ef;color:#16734e}
+.actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.sectionhead{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;margin-bottom:18px}
+.sectionhead h2{margin:0}
+.fieldgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.field{display:flex;flex-direction:column;gap:6px;min-width:0}
+.field.full{grid-column:1/-1}
+label{font-size:12px;font-weight:650;color:#4b5d78}
+input,select,textarea{width:100%;padding:10px 11px;border:1px solid #dce3ee;border-radius:8px;background:white;color:var(--text);outline:none;min-width:0}
+input:focus,select:focus,textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px #2864d71a}
+textarea{resize:vertical;min-height:76px}
+.formbox{margin-bottom:20px}
+.tablewrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:12px}
+th{text-align:left;color:#66758d;background:#f7f9fc;font-weight:700}
+th,td{padding:12px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+td{line-height:1.6}
+.badge{display:inline-block;padding:5px 8px;border-radius:6px;font-size:10px;font-weight:750;background:#edf1f7;color:#4c5d76}
+.b1{background:#ffeded;color:#b63845}.b2{background:#fff1dc;color:#995b00}.b3{background:#fff7d7;color:#876b00}.b4{background:#e5f3ff;color:#205da9}.b5{background:#ddf7e9;color:#16764e}
+.muted{color:var(--muted)}
+.empty{text-align:center;padding:30px;color:var(--muted);font-size:13px}
+.barrow{display:grid;grid-template-columns:110px 1fr 35px;gap:10px;align-items:center;margin:15px 0;font-size:12px}
+.barbg{height:10px;background:#edf1f7;border-radius:20px;overflow:hidden}
+.barfill{height:100%;background:linear-gradient(90deg,#2864d7,#56a2ef);border-radius:20px}
+.quick{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.quick button{text-align:left;padding:16px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--navy);font-weight:700}
+.quick button span{display:block;color:var(--muted);font-size:11px;font-weight:400;margin-top:7px}
+.notice{padding:14px 16px;border-radius:9px;background:#edf4ff;color:#31547f;font-size:12px;line-height:1.8;margin:15px 0}
+.hidden{display:none!important}
+hr{border:0;border-top:1px solid var(--line);margin:20px 0}
+.mobilemenu{display:none}
+@media(max-width:1050px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.two{grid-template-columns:1fr}}
+@media(max-width:700px){
+ .sidebar{width:250px;transform:translateX(-100%);transition:transform .2s}
+ .sidebar.open{transform:translateX(0)}
+ .main{margin-left:0}
+ .topbar{padding:14px 16px}
+ .content{padding:18px 14px}
+ .mobilemenu{display:inline-block}
+ .grid{gap:10px}
+ .card{padding:15px}
+ .stat{font-size:24px}
+ .fieldgrid{grid-template-columns:1fr}
+ .field.full{grid-column:auto}
+ h1{font-size:22px}
+}
+@media print{
+ .sidebar,.topbar,.no-print,button{display:none!important}
+ .main{margin:0}
+ .content{padding:0;max-width:none}
+ body{background:white}
+ .card{break-inside:avoid;box-shadow:none}
+}
+</style>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar" id="sidebar">
+ <div class="brand">PETA BELAJAR<small>PEMETAAN KEBUTUHAN MURID</small></div>
+ <div class="navlabel">MENU UTAMA</div>
+ <button class="nav active" data-page="dashboard">▦ &nbsp; Dashboard</button>
+ <button class="nav" data-page="profil">♙ &nbsp; Profil Guru & Sekolah</button>
+ <button class="nav" data-page="murid">♧ &nbsp; Data Murid</button>
+ <button class="nav" data-page="asesmen">▤ &nbsp; Asesmen & Riwayat</button>
+ <button class="nav" data-page="laporan">▥ &nbsp; Peta & Laporan</button>
+ <div class="navlabel">PENGELOLAAN DATA</div>
+ <button class="nav" onclick="backup()">⇩ &nbsp; Cadangkan Data</button>
+ <button class="nav" onclick="document.getElementById('restoreFile').click()">⇧ &nbsp; Pulihkan Data</button>
+ <input id="restoreFile" type="file" accept=".json" class="hidden" onchange="restoreData(event)">
+ <div class="sidefoot">PETA BELAJAR<br>Temukan kebutuhan, dampingi kemajuan.<br><span id="storageInfo">Penyimpanan lokal perangkat</span></div>
+</aside>
+
+<main class="main">
+ <header class="topbar">
+  <div class="actions"><button class="btn secondary mobilemenu" onclick="toggleSidebar()">☰</button><strong id="pageTitle">Dashboard</strong></div>
+  <small>peta-belajar.html</small>
+ </header>
+ <div class="content">
+  <section id="page-dashboard">
+   <h1>Dashboard Pembelajaran</h1>
+   <p class="sub">Selamat datang di PETA BELAJAR. Kenali kebutuhan murid, pantau kemajuan, dan rencanakan tindak lanjut secara sederhana.</p>
+   <div class="grid">
+    <div class="card"><div class="stat-label">Total Murid</div><div class="stat" id="statMurid">0</div><div class="stat-note">Murid terdaftar</div></div>
+    <div class="card"><div class="stat-label">Total Asesmen</div><div class="stat" id="statAsesmen">0</div><div class="stat-note">Seluruh riwayat tersimpan</div></div>
+    <div class="card"><div class="stat-label">Perlu Pendampingan</div><div class="stat" id="statBimbingan">0</div><div class="stat-note">Berdasarkan nilai terbaru</div></div>
+    <div class="card"><div class="stat-label">Murid Berkembang</div><div class="stat" id="statNaik">0</div><div class="stat-note">Nilai terbaru lebih tinggi</div></div>
+   </div>
+   <div class="two">
+    <div class="card"><h2>Ringkasan Capaian Terbaru</h2><div id="chartRingkas"></div><p class="muted" style="font-size:11px">Kategori menggunakan skor asesmen terbaru setiap murid.</p></div>
+    <div class="card"><h2>Akses Cepat</h2><div class="quick">
+     <button onclick="showPage('murid')">＋ Tambah Murid<span>Kelola data murid</span></button>
+     <button onclick="showPage('asesmen')">＋ Input Asesmen<span>Catat capaian belajar</span></button>
+     <button onclick="showPage('laporan')">▤ Lihat Laporan<span>Analisis dan cetak hasil</span></button>
+     <button onclick="backup()">⇩ Cadangkan<span>Simpan salinan data</span></button>
+    </div></div>
+   </div>
+   <div class="card" style="margin-top:18px"><div class="sectionhead"><h2>Aktivitas Asesmen Terakhir</h2><button class="btn secondary" onclick="showPage('asesmen')">Lihat semua</button></div><div id="recentTable"></div></div>
+   <div class="notice">Prinsip penggunaan: asesmen adalah alat untuk memahami kebutuhan murid dan memperbaiki pembelajaran, bukan sekadar memberi label atau membandingkan murid.</div>
+  </section>
+
+  <section id="page-profil" class="hidden">
+   <h1>Profil Guru & Sekolah</h1><p class="sub">Lengkapi identitas untuk ditampilkan pada laporan.</p>
+   <div class="card"><form id="profileForm"><div class="fieldgrid">
+    <div class="field"><label>Nama Guru</label><input name="guru" placeholder="Nama lengkap guru"></div>
+    <div class="field"><label>NIP / Identitas Guru</label><input name="nip" placeholder="Opsional"></div>
+    <div class="field"><label>Nama Sekolah</label><input name="sekolah" placeholder="Nama sekolah"></div>
+    <div class="field"><label>Jenjang</label><select name="jenjang"><option>SD/MI</option><option>SMP/MTs</option><option>SMA/MA</option><option>SMK</option><option>PAUD</option><option>Lainnya</option></select></div>
+    <div class="field"><label>Tahun Ajaran</label><input name="tahun" placeholder="2026/2027"></div>
+    <div class="field"><label>Kelas yang Diampu</label><input name="kelas" placeholder="Contoh: Kelas 4A"></div>
+   </div><div class="actions" style="margin-top:20px"><button class="btn">Simpan Profil</button></div></form></div>
+  </section>
+
+  <section id="page-murid" class="hidden">
+   <h1>Data Murid</h1><p class="sub">Kelola identitas murid. Setiap murid dapat memiliki banyak catatan asesmen.</p>
+   <div class="card formbox"><div class="sectionhead"><h2 id="studentFormTitle">Tambah Murid</h2><button class="btn secondary" onclick="resetStudentForm()">Kosongkan Form</button></div>
+    <form id="studentForm"><input type="hidden" name="id">
+     <div class="fieldgrid">
+      <div class="field"><label>Nama Murid *</label><input name="nama" required placeholder="Nama lengkap murid"></div>
+      <div class="field"><label>NIS / Kode Murid</label><input name="nis" placeholder="Opsional"></div>
+      <div class="field"><label>Kelas *</label><select name="kelas" required><option value="">Pilih kelas</option><option>Kelas 1</option><option>Kelas 2</option><option>Kelas 3</option><option>Kelas 4</option><option>Kelas 5</option><option>Kelas 6</option><option>PAUD</option><option>SMP</option><option>SMA/SMK</option><option>Lainnya</option></select></div>
+      <div class="field"><label>Mapel / Fokus Belajar</label><input name="mapel" placeholder="Contoh: Matematika, literasi"></div>
+      <div class="field full"><label>Catatan Kebutuhan / Potensi Awal</label><textarea name="catatan" placeholder="Opsional. Hindari label yang menghakimi; tulis kebutuhan dan potensi yang teramati."></textarea></div>
+     </div><div class="actions" style="margin-top:16px"><button class="btn">Simpan Murid</button><button type="button" class="btn secondary" onclick="resetStudentForm()">Batal Edit</button></div>
+    </form>
+   </div>
+   <div class="card"><div class="sectionhead"><h2>Daftar Murid</h2><input id="searchMurid" style="max-width:260px" placeholder="Cari nama / kelas..." oninput="renderStudents()"></div><div id="studentTable"></div></div>
+  </section>
+
+  <section id="page-asesmen" class="hidden">
+   <h1>Asesmen & Riwayat Perkembangan</h1><p class="sub">Catat asesmen awal, pemantauan berkala, asesmen akhir, atau asesmen ulang sesuai kebutuhan. Data lama tidak ditimpa saat asesmen baru dibuat.</p>
+   <div class="card formbox"><div class="sectionhead"><h2 id="assessmentFormTitle">Input Asesmen Baru</h2><span class="badge">Skala nilai 0–100</span></div>
+    <form id="assessmentForm"><input type="hidden" name="id">
+     <div class="fieldgrid">
+      <div class="field"><label>Murid *</label><select name="muridId" id="assessmentStudent" required><option value="">Pilih murid</option></select></div>
+      <div class="field"><label>Tanggal Asesmen *</label><input type="date" name="tanggal" required></div>
+      <div class="field"><label>Jenis / Periode *</label><select name="jenis" required><option>Asesmen Awal</option><option>Pemantauan Berkala</option><option>Tengah Semester</option><option>Akhir Semester</option><option>Asesmen Ulang / Remedial</option><option>Asesmen Diagnostik</option><option>Observasi / Lainnya</option></select></div>
+      <div class="field"><label>Mata Pelajaran / Fokus *</label><input name="mapel" required placeholder="Contoh: Matematika"></div>
+      <div class="field"><label>Skor Kognitif (0–100) *</label><input name="skor" type="number" min="0" max="100" required placeholder="0–100"></div>
+      <div class="field"><label>Aspek yang Diamati</label><select name="aspek"><option>Pemahaman konsep</option><option>Literasi</option><option>Numerasi</option><option>Berpikir kritis</option><option>Kreativitas</option><option>Kolaborasi</option><option>Komunikasi</option><option>Refleksi / Kemandirian</option><option>Perkembangan menyeluruh</option><option>Lainnya</option></select></div>
+      <div class="field full"><label>Bukti / Catatan Hasil Asesmen</label><textarea name="catatan" placeholder="Apa yang sudah dikuasai? Di bagian mana murid masih membutuhkan bantuan? Tuliskan bukti yang diamati."></textarea></div>
+      <div class="field full"><label>Tindak Lanjut Pembelajaran</label><textarea name="tindakLanjut" placeholder="Contoh: latihan bertahap, pendampingan kelompok kecil, media visual, pengayaan, atau diskusi dengan murid."></textarea></div>
+     </div>
+     <div class="actions" style="margin-top:16px"><button class="btn">Simpan Asesmen</button><button type="button" class="btn secondary" onclick="resetAssessmentForm()">Batal Edit</button></div>
+    </form>
+   </div>
+   <div class="card"><div class="sectionhead"><h2>Riwayat Semua Asesmen</h2><select id="filterMurid" style="max-width:240px" onchange="renderAssessments()"><option value="">Semua murid</option></select></div><div id="assessmentTable"></div></div>
+  </section>
+
+  <section id="page-laporan" class="hidden">
+   <h1>Peta Belajar & Laporan</h1><p class="sub">Gunakan data sebagai bahan refleksi dan perencanaan tindak lanjut, bukan sebagai satu-satunya dasar keputusan tentang murid.</p>
+   <div class="card no-print" style="margin-bottom:18px"><div class="fieldgrid">
+    <div class="field"><label>Pilih Murid</label><select id="reportStudent" onchange="renderReport()"><option value="">Semua murid</option></select></div>
+    <div class="field"><label>Filter Mata Pelajaran</label><input id="reportMapel" placeholder="Semua mata pelajaran" oninput="renderReport()"></div>
+   </div><div class="actions" style="margin-top:16px">
+    <button class="btn" onclick="window.print()">Cetak / Simpan PDF</button>
+    <button class="btn secondary" onclick="exportCSV()">Unduh Laporan CSV</button>
+    <button class="btn secondary" onclick="exportJSON()">Unduh Cadangan JSON</button>
+   </div></div>
+   <div id="reportOutput"></div>
+  </section>
+ </div>
+</main>
+</div>
+
+<script>
+const KEY='petaBelajarFinal_v1';
+const $=s=>document.querySelector(s);
+const $$=s=>document.querySelectorAll(s);
+let db={profile:{guru:'',nip:'',sekolah:'',jenjang:'SD/MI',tahun:'',kelas:''},students:[],assessments:[]};
+
+function load(){
+ try{const raw=localStorage.getItem(KEY);if(raw){const x=JSON.parse(raw);db={...db,...x,profile:{...db.profile,...x.profile}}}}
+ catch(e){alert('Data lokal tidak dapat dibaca. Pulihkan dari file cadangan jika tersedia.')}
+}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(db));$('#storageInfo').textContent='Data tersimpan di perangkat ini'}catch(e){alert('Penyimpanan penuh atau tidak tersedia. Segera unduh cadangan JSON.')}renderAll()}
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,8)}
+function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function fmtDate(s){if(!s)return '—';const d=new Date(s+'T00:00:00');return isNaN(d)?s:d.toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'})}
+function student(id){return db.students.find(s=>s.id===id)}
+function history(id){return db.assessments.filter(a=>a.muridId===id).sort((a,b)=>b.tanggal.localeCompare(a.tanggal)||b.createdAt-a.createdAt)}
+function latest(id){return history(id)[0]}
+function category(n){
+ n=Number(n);
+ if(n<50)return {name:'Perlu Bimbingan Intensif',cls:'b1',desc:'Belum menunjukkan pemahaman konsep dasar secara memadai. Perlu pendampingan bertahap dan remedial individual sesuai kebutuhan.'};
+ if(n<60)return {name:'Perlu Perbaikan',cls:'b2',desc:'Pemahaman masih terbatas. Perlu penguatan konsep dan latihan dengan umpan balik.'};
+ if(n<=70)return {name:'Cukup – Menuju Cakap',cls:'b3',desc:'Mulai memahami konsep, tetapi penerapan belum konsisten. Perlu latihan dan penguatan.'};
+ if(n<=79)return {name:'Cakap / Baik',cls:'b4',desc:'Menunjukkan pemahaman yang baik. Perlu kesempatan menerapkan konsep dalam konteks yang beragam.'};
+ return {name:'Mahir / Tuntas Sangat Baik',cls:'b5',desc:'Menunjukkan capaian tinggi pada asesmen ini. Pertimbangkan pengayaan, tantangan lanjutan, dan berbagi strategi belajar jika sesuai.'};
+}
+function pill(n){const c=category(n);return `<span class="badge ${c.cls}">${esc(c.name)}</span>`}
+function showPage(name){
+ $$('.content section').forEach(s=>s.classList.add('hidden'));
+ $('#page-'+name).classList.remove('hidden');
+ $$('.nav[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===name));
+ const titles={dashboard:'Dashboard',profil:'Profil Guru & Sekolah',murid:'Data Murid',asesmen:'Asesmen & Riwayat',laporan:'Peta & Laporan'};
+ $('#pageTitle').textContent=titles[name]||name;
+ $('#sidebar').classList.remove('open');
+ renderAll();
+}
+function toggleSidebar(){$('#sidebar').classList.toggle('open')}
+$$('.nav[data-page]').forEach(b=>b.addEventListener('click',()=>showPage(b.dataset.page)));
+
+$('#profileForm').addEventListener('submit',e=>{
+ e.preventDefault();const f=Object.fromEntries(new FormData(e.target));db.profile=f;save();alert('Profil berhasil disimpan.');
+});
+function loadProfile(){
+ const f=$('#profileForm');Object.entries(db.profile).forEach(([k,v])=>{if(f.elements[k])f.elements[k].value=v||''});
+}
+function resetStudentForm(){const f=$('#studentForm');f.reset();f.elements.id.value='';$('#studentFormTitle').textContent='Tambah Murid'}
+$('#studentForm').addEventListener('submit',e=>{
+ e.preventDefault();const f=Object.fromEntries(new FormData(e.target));
+ if(!f.nama.trim())return;
+ if(f.id){const i=db.students.findIndex(s=>s.id===f.id);if(i>=0)db.students[i]={...db.students[i],...f}}
+ else db.students.push({...f,id:uid(),createdAt:Date.now()});
+ resetStudentForm();save();
+});
+function editStudent(id){
+ const s=student(id);if(!s)return;const f=$('#studentForm');
+ Object.keys(s).forEach(k=>{if(f.elements[k])f.elements[k].value=s[k]||''});
+ $('#studentFormTitle').textContent='Edit Data Murid';
+ $('#page-murid').scrollIntoView({behavior:'smooth'});
+}
+function deleteStudent(id){
+ const s=student(id);if(!s)return;
+ if(!confirm('Hapus data '+s.nama+' beserta seluruh riwayat asesmennya? Tindakan ini tidak dapat dibatalkan.'))return;
+ db.students=db.students.filter(x=>x.id!==id);db.assessments=db.assessments.filter(a=>a.muridId!==id);save();
+}
+function renderStudents(){
+ const q=($('#searchMurid')?.value||'').toLowerCase();
+ const rows=db.students.filter(s=>(s.nama+' '+s.kelas+' '+s.nis).toLowerCase().includes(q));
+ $('#studentTable').innerHTML=rows.length?`<div class="tablewrap"><table><thead><tr><th>Nama Murid</th><th>Kelas</th><th>Mapel/Fokus</th><th>Asesmen Terbaru</th><th>Aksi</th></tr></thead><tbody>${rows.map(s=>{const a=latest(s.id);return `<tr><td><strong>${esc(s.nama)}</strong><br><span class="muted">${esc(s.nis||'')}</span></td><td>${esc(s.kelas)}</td><td>${esc(s.mapel||'—')}</td><td>${a?`${a.skor}/100<br>${pill(a.skor)}`:'Belum ada'}</td><td><div class="actions"><button class="btn secondary" onclick="editStudent('${s.id}')">Edit</button><button class="btn danger" onclick="deleteStudent('${s.id}')">Hapus</button></div></td></tr>`}).join('')}</tbody></table></div>`:'<div class="empty">Belum ada data murid. Tambahkan murid menggunakan formulir di atas.</div>';
+}
+function resetAssessmentForm(){const f=$('#assessmentForm');f.reset();f.elements.id.value='';$('#assessmentFormTitle').textContent='Input Asesmen Baru';f.elements.tanggal.value=new Date().toISOString().slice(0,10)}
+$('#assessmentForm').addEventListener('submit',e=>{
+ e.preventDefault();const f=Object.fromEntries(new FormData(e.target));f.skor=Number(f.skor);
+ if(f.skor<0||f.skor>100||!student(f.muridId)){alert('Pilih murid dan isi skor antara 0 sampai 100.');return}
+ if(f.id){const i=db.assessments.findIndex(a=>a.id===f.id);if(i>=0)db.assessments[i]={...db.assessments[i],...f,updatedAt:Date.now()}}
+ else db.assessments.push({...f,id:uid(),createdAt:Date.now()});
+ resetAssessmentForm();save();
+});
+function editAssessment(id){
+ const a=db.assessments.find(x=>x.id===id);if(!a)return;const f=$('#assessmentForm');
+ Object.keys(a).forEach(k=>{if(f.elements[k])f.elements[k].value=a[k]??''});
+ $('#assessmentFormTitle').textContent='Edit Asesmen';$('#page-asesmen').scrollIntoView({behavior:'smooth'});
+}
+function deleteAssessment(id){
+ if(!confirm('Hapus catatan asesmen ini? Riwayat lain tetap tersimpan.'))return;
+ db.assessments=db.assessments.filter(a=>a.id!==id);save();
+}
+function renderAssessments(){
+ const filter=$('#filterMurid')?.value||'';
+ const list=db.assessments.filter(a=>!filter||a.muridId===filter).sort((a,b)=>b.tanggal.localeCompare(a.tanggal)||b.createdAt-a.createdAt);
+ $('#assessmentTable').innerHTML=list.length?`<div class="tablewrap"><table><thead><tr><th>Tanggal</th><th>Murid</th><th>Jenis / Mapel</th><th>Skor & Kategori</th><th>Catatan / Tindak Lanjut</th><th>Aksi</th></tr></thead><tbody>${list.map(a=>{const s=student(a.muridId);return `<tr><td>${fmtDate(a.tanggal)}</td><td><strong>${esc(s?.nama||'Murid dihapus')}</strong><br>${esc(s?.kelas||'')}</td><td>${esc(a.jenis)}<br><span class="muted">${esc(a.mapel)}</span></td><td><strong>${a.skor}/100</strong><br>${pill(a.skor)}</td><td>${esc(a.catatan||'—')}<hr>${esc(a.tindakLanjut||'Belum dicatat')}</td><td><div class="actions"><button class="btn secondary" onclick="editAssessment('${a.id}')">Edit</button><button class="btn danger" onclick="deleteAssessment('${a.id}')">Hapus</button></div></td></tr>`}).join('')}</tbody></table></div>`:'<div class="empty">Belum ada asesmen. Pilih murid dan catat hasil asesmen pertama.</div>';
+}
+function refreshSelects(){
+ const opts=db.students.slice().sort((a,b)=>a.nama.localeCompare(b.nama)).map(s=>`<option value="${esc(s.id)}">${esc(s.nama)} — ${esc(s.kelas)}</option>`).join('');
+ const set= (id,first)=>{const el=$(id);if(!el)return;const old=el.value;el.innerHTML=`<option value="">${first}</option>`+opts;if([...el.options].some(o=>o.value===old))el.value=old};
+ set('#assessmentStudent','Pilih murid');set('#filterMurid','Semua murid');set('#reportStudent','Semua murid');
+}
+function renderDashboard(){
+ $('#statMurid').textContent=db.students.length;
+ $('#statAsesmen').textContent=db.assessments.length;
+ $('#statBimbingan').textContent=db.students.filter(s=>latest(s.id)&&latest(s.id).skor<60).length;
+ $('#statNaik').textContent=db.students.filter(s=>{const h=history(s.id);return h.length>1&&Number(h[0].skor)>Number(h[1].skor)}).length;
+ const groups=[
+ ['Perlu Bimbingan',db.students.filter(s=>latest(s.id)&&latest(s.id).skor<50).length,'#d95460'],
+ ['Perlu Perbaikan',db.students.filter(s=>latest(s.id)&&latest(s.id).skor>=50&&latest(s.id).skor<60).length,'#d99737'],
+ ['Menuju Cakap',db.students.filter(s=>latest(s.id)&&latest(s.id).skor>=60&&latest(s.id).skor<=70).length,'#d9bc3c'],
+ ['Cakap / Baik',db.students.filter(s=>latest(s.id)&&latest(s.id).skor>=71&&latest(s.id).skor<=79).length,'#458de0'],
+ ['Mahir',db.students.filter(s=>latest(s.id)&&latest(s.id).skor>79).length,'#25a578']
+ ];
+ const max=Math.max(1,...groups.map(g=>g[1]));
+ $('#chartRingkas').innerHTML=groups.map(g=>`<div class="barrow"><span>${g[0]}</span><div class="barbg"><div class="barfill" style="width:${g[1]/max*100}%;background:${g[2]}"></div></div><strong>${g[1]}</strong></div>`).join('');
+ const recent=db.assessments.slice().sort((a,b)=>b.tanggal.localeCompare(a.tanggal)||b.createdAt-a.createdAt).slice(0,5);
+ $('#recentTable').innerHTML=recent.length?`<div class="tablewrap"><table><thead><tr><th>Tanggal</th><th>Murid</th><th>Asesmen</th><th>Skor</th></tr></thead><tbody>${recent.map(a=>`<tr><td>${fmtDate(a.tanggal)}</td><td>${esc(student(a.muridId)?.nama||'—')}</td><td>${esc(a.jenis)} · ${esc(a.mapel)}</td><td><strong>${a.skor}</strong> ${pill(a.skor)}</td></tr>`).join('')}</tbody></table></div>`:'<div class="empty">Aktivitas akan muncul setelah asesmen dicatat.</div>';
+}
+function renderReport(){
+ const id=$('#reportStudent').value,mapel=$('#reportMapel').value.toLowerCase();
+ const students=db.students.filter(s=>!id||s.id===id);
+ let html=`<div class="card"><h2>Peta Belajar Murid</h2><p class="muted" style="font-size:12px">${esc(db.profile.guru||'Nama guru belum diisi')} · ${esc(db.profile.sekolah||'Nama sekolah belum diisi')} · Tahun ajaran ${esc(db.profile.tahun||'—')}</p>`;
+ if(!students.length){$('#reportOutput').innerHTML=html+'<div class="empty">Belum ada data murid.</div></div>';return}
+ for(const s of students){
+  const hs=history(s.id).filter(a=>!mapel||a.mapel.toLowerCase().includes(mapel));
+  if(!hs.length)continue;
+  const newest=hs[0],oldest=hs[hs.length-1],delta=Number(newest.skor)-Number(oldest.skor),c=category(newest.skor);
+  html+=`<hr><h2>${esc(s.nama)} <span class="badge">${esc(s.kelas)}</span></h2><p style="font-size:12px">NIS: ${esc(s.nis||'—')} · Fokus: ${esc(s.mapel||'—')}</p>`;
+  html+=`<div class="grid" style="grid-template-columns:repeat(3,minmax(0,1fr))"><div><div class="stat-label">Nilai terbaru</div><div class="stat">${newest.skor}</div></div><div><div class="stat-label">Perubahan skor</div><div class="stat">${delta>0?'+':''}${delta}</div></div><div><div class="stat-label">Kategori</div><p>${pill(newest.skor)}</p></div></div>`;
+  html+=`<p style="font-size:13px;line-height:1.8"><strong>Interpretasi awal:</strong> ${esc(c.desc)}</p>`;
+  html+=`<p style="font-size:12px;line-height:1.8"><strong>Potensi / kebutuhan awal:</strong> ${esc(s.catatan||'Belum dicatat')}<br><strong>Catatan asesmen terbaru:</strong> ${esc(newest.catatan||'Belum dicatat')}<br><strong>Tindak lanjut:</strong> ${esc(newest.tindakLanjut||'Belum dicatat')}</p>`;
+  html+='<h2>Riwayat Perkembangan</h2><div class="tablewrap"><table><thead><tr><th>Tanggal</th><th>Jenis</th><th>Mapel / Fokus</th><th>Skor</th><th>Kategori</th></tr></thead><tbody>';
+  html+=hs.slice().reverse().map(a=>`<tr><td>${fmtDate(a.tanggal)}</td><td>${esc(a.jenis)}</td><td>${esc(a.mapel)}</td><td>${a.skor}</td><td>${pill(a.skor)}</td></tr>`).join('');
+  html+='</tbody></table></div>';
+  html+='<h2 style="margin-top:18px">Refleksi Guru dan Rencana Perbaikan</h2><p style="font-size:12px;line-height:1.8">1. Bukti kemajuan yang terlihat: ____________________________________<br>2. Hambatan atau kebutuhan yang perlu ditelusuri: _____________________<br>3. Strategi / penyesuaian pembelajaran berikutnya: _____________________<br>4. Waktu meninjau kembali perkembangan: ____________________________</p>';
+ }
+ html+='<p class="muted" style="font-size:10px;margin-top:25px">Laporan ini merupakan alat bantu refleksi. Kategori skor bukan diagnosis dan tidak menggantikan penilaian profesional guru, observasi, dialog dengan murid, atau bukti belajar lainnya.</p></div>';
+ $('#reportOutput').innerHTML=html;
+}
+function renderAll(){
+ refreshSelects();renderStudents();renderAssessments();renderDashboard();renderReport();loadProfile();
+}
+function download(content,type,name){
+ const blob=new Blob([content],{type}),url=URL.createObjectURL(blob),a=document.createElement('a');
+ a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+function csvCell(x){return '"'+String(x??'').replace(/"/g,'""')+'"'}
+function exportCSV(){
+ const rows=[['Nama Guru','NIP','Sekolah','Nama Siswa','NIS','Kelas','Mapel','Tanggal Asesmen','Jenis Asesmen','Skor','Kategori','Uraian Lengkap','Bukti / Catatan','Tindak Lanjut']];
+ db.assessments.slice().sort((a,b)=>a.tanggal.localeCompare(b.tanggal)).forEach(a=>{
+  const s=student(a.muridId)||{},c=category(a.skor);
+  rows.push([db.profile.guru,db.profile.nip,db.profile.sekolah,s.nama,s.nis,s.kelas,a.mapel,a.tanggal,a.jenis,a.skor,c.name,c.desc,a.catatan,a.tindakLanjut]);
+ });
+ const csv='\uFEFF'+rows.map(r=>r.map(csvCell).join(',')).join('\r\n');
+ download(csv,'text/csv;charset=utf-8','peta-belajar-laporan.csv');
+}
+function exportJSON(){download(JSON.stringify(db,null,2),'application/json','peta-belajar-cadangan.json')}
+function backup(){exportJSON()}
+function restoreData(e){
+ const file=e.target.files[0];if(!file)return;
+ const reader=new FileReader();
+ reader.onload=()=>{
+  try{const x=JSON.parse(reader.result);
+   if(!x||!Array.isArray(x.students)||!Array.isArray(x.assessments)||!x.profile)throw Error();
+   if(!confirm('Pulihkan cadangan? Data saat ini akan digantikan. Sebaiknya unduh cadangan data sekarang terlebih dahulu.'))return;
+   db=x;save();loadProfile();alert('Data berhasil dipulihkan.');
+  }catch(err){alert('File cadangan tidak valid atau tidak sesuai format PETA BELAJAR.')}
+  e.target.value='';
+ };
+ reader.readAsText(file);
+}
+load();loadProfile();resetAssessmentForm();renderAll();
+</script>
+</body>
+</html>
